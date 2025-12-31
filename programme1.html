@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPIATE - Informatique de Gestion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        /* Top Info Bar */
+        .top-info-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: rgb(0, 4, 255);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1001;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-media a {
+            color: white;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-media a:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 50px;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: rgb(0, 4, 255);
+            padding: 0 5%;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            color: rgb(255, 255, 255);
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.left {
+            justify-content: flex-start;
+        }
+
+        .nav-links.right {
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: rgb(0, 4, 255);
+            text-decoration: none;
+            padding: 12px 25px;
+            margin: 0 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Smaller Logo Styles */
+        .logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .shield-logo {
+            width: 100px;
+            height: 70px;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 50% 100%, 0% 80%);
+            cursor: pointer;
+            margin-top: 15px;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+            max-height: 60px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .shield-logo:hover {
+            transform: translateY(5px);
+        }
+
+        .shield-logo:hover .logo-img {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .burger div {
+            width: 28px;
+            height: 3px;
+            background-color: rgb(0, 4, 255);
+            margin: 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Programme Page Specific Styles */
+        .programme-header {
+            background: linear-gradient(135deg, rgb(0, 4, 255) 0%, rgba(0,212,255,1) 100%);
+            color: white;
+            padding: 80px 5% 60px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .programme-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .programme-header .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 0.8;
+        }
+
+        .breadcrumb .separator {
+            opacity: 0.7;
+        }
+
+        .programme-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            padding: 0 5% 50px;
+        }
+
+        .programme-main {
+            flex: 2;
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .programme-sidebar {
+            flex: 1;
+        }
+
+        .programme-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .programme-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .programme-details {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .detail-item {
+            margin-bottom: 20px;
+        }
+
+        .detail-item h3 {
+            color: rgb(0, 4, 255);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .detail-item p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .register-box {
+            background: rgb(0, 4, 255);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .register-box h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .register-btn {
+            display: inline-block;
+            background: white;
+            color: rgb(0, 4, 255);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.2);
+        }
+
+        .programme-content h2 {
+            color: rgb(0, 4, 255);
+            margin: 30px 0 20px;
+            font-size: 1.8rem;
+        }
+
+        .programme-content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .programme-content ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .programme-content li {
+            margin-bottom: 10px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: rgba(0, 4, 255, 0.05);
+            border-left: 4px solid rgb(0, 4, 255);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Registration Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background: rgb(0, 4, 255);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: rgb(0, 4, 255);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: rgba(0, 4, 255, 0.9);
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 900px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .top-info-bar {
+                height: 70px;
+                flex-direction: column;
+                padding: 5px 0;
+                justify-content: center;
+            }
+
+            .contact-info, .social-media {
+                width: 100%;
+                justify-content: center;
+                gap: 10px;
+                padding: 0 10px;
+                flex-wrap: wrap;
+            }
+
+            .contact-info a, .social-media a {
+                font-size: 0.8rem;
+            }
+
+            .social-media {
+                gap: 10px;
+                margin-top: 5px;
+            }
+
+            nav {
+                top: 70px;
+                height: 70px;
+            }
+
+            .nav-links {
+                position: fixed;
+                right: 0;
+                height: calc(100vh - 140px);
+                top: 140px;
+                background-color: rgb(0, 4, 255);
+                flex-direction: column;
+                align-items: center;
+                width: 70%;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-out;
+                padding-top: 30px;
+            }
+
+            .nav-links.left, .nav-links.right {
+                justify-content: flex-start;
+            }
+
+            .nav-links a {
+                margin: 10px 0;
+                padding: 15px;
+                width: 80%;
+                font-size: 1.1rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                color: white;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .logo-container {
+                position: static;
+                transform: none !important;
+                order: -1;
+            }
+
+            .shield-logo {
+                width: 80px;
+                height: 60px;
+                margin-top: 10px;
+                background: transparent;
+            }
+
+            .logo-img {
+                max-height: 50px;
+            }
+
+            .programme-container {
+                flex-direction: column;
+            }
+            
+            .programme-header h1 {
+                font-size: 2rem;
+            }
+            
+            .programme-main, .programme-sidebar {
+                width: 100%;
+            }
+        }
+
+        .nav-active {
+            transform: translateX(0%);
+        }
+
+        .toggle .line1 {
+            transform: rotate(-45deg) translate(-6px, 7px);
+        }
+        .toggle .line2 {
+            opacity: 0;
+        }
+        .toggle .line3 {
+            transform: rotate(45deg) translate(-6px, -7px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Info Bar with Contact and Social Media -->
+    <div class="top-info-bar">
+        <div class="contact-info">
+            <a href="#"><i class="fas fa-map-marker-alt"></i> 123 Rue Example, Paris</a>
+            <a href="tel:+33123456789"><i class="fas fa-phone"></i> +33 1 23 45 67 89</a>
+            <a href="mailto:contact@ipiate.com"><i class="fas fa-envelope"></i> contact@ipiate.com</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+
+    <!-- Navigation Bar with Smaller Logo -->
+    <nav>
+        <div class="nav-links left">
+            <a href="index.html">Accueil</a>
+            <a href="index.html#about">À propos</a>
+        </div>
+        
+        <div class="logo-container">
+            <div class="shield-logo">
+                <img src="ipiate.png" alt="IPIATE Logo" class="logo-img">
+            </div>
+        </div>
+        
+        <div class="nav-links right">
+            <a href="index.html#services">Programmes</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <!-- Programme Header -->
+    <section class="programme-header">
+        <h1>Informatique de Gestion</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Accueil</a>
+            <span class="separator">/</span>
+            <a href="index.html#services">Programmes</a>
+            <span class="separator">/</span>
+            <span>Informatique de Gestion</span>
+        </div>
+    </section>
+
+    <!-- Programme Content -->
+    <div class="programme-container">
+        <main class="programme-main">
+            <div class="programme-image">
+                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Informatique de Gestion">
+            </div>
+            
+            <div class="programme-content">
+                <h2>Présentation du Programme</h2>
+                <p>Le programme d'Informatique de Gestion à IPIATE forme des professionnels capables de concevoir, développer et maintenir des systèmes d'information pour les entreprises. Cette formation intensive de deux ans combine théorie et pratique pour vous préparer aux défis du monde professionnel.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>Durée :</strong> 2 ans (4 semestres) | <strong>Diplôme :</strong> BAC+2 | <strong>Stage :</strong> 6 mois en entreprise</p>
+                </div>
+                
+                <h2>Objectifs de la Formation</h2>
+                <p>À l'issue de cette formation, vous serez capable de :</p>
+                <ul>
+                    <li>Concevoir et développer des applications métiers pour les entreprises</li>
+                    <li>Administrer et optimiser des bases de données</li>
+                    <li>Analyser les besoins informatiques d'une organisation</li>
+                    <li>Mettre en place des solutions ERP et systèmes d'information</li>
+                    <li>Gérer des projets informatiques selon les normes en vigueur</li>
+                </ul>
+                
+                <h2>Programme Détaillé</h2>
+                
+                <h3>Semestre 1 : Fondamentaux</h3>
+                <ul>
+                    <li>Algorithmique et programmation</li>
+                    <li>Bases de données relationnelles</li>
+                    <li>Systèmes d'information</li>
+                    <li>Mathématiques pour l'informatique</li>
+                    <li>Gestion d'entreprise</li>
+                </ul>
+                
+                <h3>Semestre 2 : Développement Avancé</h3>
+                <ul>
+                    <li>Développement web (HTML, CSS, JavaScript)</li>
+                    <li>Programmation orientée objet (Java, C#)</li>
+                    <li>Bases de données avancées (SQL, NoSQL)</li>
+                    <li>Réseaux et sécurité informatique</li>
+                    <li>Projet intégré</li>
+                </ul>
+                
+                <h3>Semestre 3 : Spécialisation</h3>
+                <ul>
+                    <li>Développement d'applications métiers</li>
+                    <li>Systèmes ERP (SAP, Oracle)</li>
+                    <li>Business Intelligence</li>
+                    <li>Gestion de projet informatique</li>
+                    <li>Stage en entreprise (3 mois)</li>
+                </ul>
+                
+                <h3>Semestre 4 : Professionnalisation</h3>
+                <ul>
+                    <li>Projet de fin d'études</li>
+                    <li>Stage professionnel (3 mois)</li>
+                    <li>Préparation à l'insertion professionnelle</li>
+                </ul>
+                
+                <h2>Débouchés Professionnels</h2>
+                <p>Nos diplômés en Informatique de Gestion occupent des postes tels que :</p>
+                <ul>
+                    <li>Développeur d'applications métiers</li>
+                    <li>Administrateur de bases de données</li>
+                    <li>Consultant ERP</li>
+                    <li>Analyste programmeur</li>
+                    <li>Chef de projet junior</li>
+                    <li>Technicien supérieur en systèmes d'information</li>
+                </ul>
+            </div>
+        </main>
+        
+        <aside class="programme-sidebar">
+            <div class="programme-details">
+                <div class="detail-item">
+                    <h3><i class="fas fa-calendar-alt"></i> Durée</h3>
+                    <p>2 ans (4 semestres)</p>
+                </div>
+                
+                <div class="detail-item">
+                    <h3><i class="fas fa-graduation-cap"></i> Diplôme</h3>
+                    <p>BAC+2 en Informatique de Gestion</p>
+                </div>
+                
+                <div class="detail-item">
+                    <h3><i class="fas fa-briefcase"></i> Stage</h3>
+                    <p>6 mois en entreprise</p>
+                </div>
+                
+                <div class="detail-item">
+                    <h3><i class="fas fa-language"></i> Langues</h3>
+                    <p>Français (principal), Anglais technique</p>
+                </div>
+                
+                <div class="detail-item">
+                    <h3><i class="fas fa-euro-sign"></i> Frais de scolarité</h3>
+                    <p>8 000 € par an (possibilité de bourse)</p>
+                </div>
+                
+                <div class="detail-item">
+                    <h3><i class="fas fa-clock"></i> Horaires</h3>
+                    <p>Du lundi au vendredi, 9h-17h</p>
+                </div>
+                
+                <div class="detail-item">
+                    <h3><i class="fas fa-map-marker-alt"></i> Lieu de formation</h3>
+                    <p>Campus IPIATE </p>
+                </div>
+            </div>
+            
+            <div class="register-box">
+                <h2>Intéressé par ce programme ?</h2>
+                <p>Inscrivez-vous dès maintenant pour la prochaine rentrée</p>
+                <a href="index.html" class="register-btn" >S'inscrire maintenant</a>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Registration Form Modal -->
+  
+
+    <script>
+        // Mobile menu functionality
+        const burger = document.querySelector('.burger');
+        const navLinksLeft = document.querySelector('.nav-links.left');
+        const navLinksRight = document.querySelector('.nav-links.right');
+
+        burger.addEventListener('click', () => {
+            // Toggle nav
+            navLinksLeft.classList.toggle('nav-active');
+            navLinksRight.classList.toggle('nav-active');
+            
+            // Burger animation
+            burger.classList.toggle('toggle');
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('registerModal');
+        const openModalBtn = document.getElementById('openRegisterModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+
+        openModalBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        });
+
+        closeModalBtn.addEventListener('click', function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // Form submission
+        const registrationForm = document.getElementById('registrationForm');
+        
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(registrationForm);
+            const data = Object.fromEntries(formData);
+            
+            // Here you would normally send the data to your server
+            console.log('Form submitted:', data);
+            
+            // Show success message
+            alert('Merci pour votre inscription ! Nous vous contacterons bientôt.');
+            
+            // Close modal and reset form
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+            registrationForm.reset();
+        });
+
+        // Scroll effect for navbar
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

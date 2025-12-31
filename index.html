@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Étudiant - IPIATE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "s5ZMjXctAtZxgkNpH",
+      });
+   })();
+</script>
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding-top: 130px;
+            min-height: 100vh;
+        }
+
+        /* Top Info Bar */
+        .top-info-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: rgb(0, 4, 255);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1001;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-media a {
+            color: white;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-media a:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 50px;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: rgb(0, 4, 255);
+            padding: 0 5%;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            color: rgb(255, 255, 255);
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.left {
+            justify-content: flex-start;
+        }
+
+        .nav-links.right {
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color:rgb(0, 4, 255);
+            text-decoration: none;
+            padding: 12px 25px;
+            margin: 0 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        nav.scrolled .nav-links a {
+            color:rgb(0, 4, 255);
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Updated Logo Styles */
+        .logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            transition: none;
+        }
+
+        .shield-logo {
+            width: 160px;
+            height: 100px;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 50% 100%, 0% 80%);
+            cursor: pointer;
+            margin-top: 15px;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .shield-logo:hover {
+            transform: translateY(5px);
+        }
+
+        .shield-logo:hover .logo-img {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .burger div {
+            width: 28px;
+            height: 3px;
+            background-color: rgb(0, 4, 255);
+            margin: 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .burger div {
+            background-color: white;
+        }
+
+        /* Registration Form Styles */
+        .registration-hero {
+            background: linear-gradient(135deg, rgb(0, 4, 255), #166088);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .registration-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .registration-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .registration-container {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .registration-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .card-header {
+            background-color: rgb(0, 4, 255);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .form-section h3 {
+            color: rgb(0, 4, 255);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .form-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: rgb(0, 4, 255);
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .control.has-icons-left .icon {
+            color: rgb(0, 4, 255);
+        }
+
+        .input, .textarea, .select select {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .input:focus, .textarea:focus, .select select:focus {
+            border-color: rgb(0, 4, 255);
+            box-shadow: 0 0 0 2px rgba(0, 4, 255, 0.2);
+        }
+
+        .radio, .checkbox {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .radio input, .checkbox input {
+            margin-right: 8px;
+        }
+
+        .radio:hover, .checkbox:hover {
+            color: rgb(0, 4, 255);
+        }
+
+        /* Program Selection Styles */
+        .programs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .program-option {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: white;
+            overflow: hidden;
+        }
+
+        .program-image {
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .program-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .program-option:hover .program-image img {
+            transform: scale(1.05);
+        }
+
+        .program-content {
+            padding: 20px;
+        }
+
+        .program-option:hover {
+            border-color: rgb(0, 4, 255);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .program-option.selected {
+            border-color: rgb(0, 4, 255);
+            background-color: rgba(0, 4, 255, 0.05);
+        }
+
+        .program-option.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgb(0, 4, 255);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .program-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: rgb(0, 4, 255);
+        }
+
+        .program-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: rgb(0, 4, 255);
+        }
+
+        .program-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Button Styles */
+        .button.is-primary {
+            background-color: rgb(0, 4, 255);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .button.is-primary:hover {
+            background-color: rgba(0, 4, 255, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 4, 255, 0.3);
+        }
+
+        .button.is-light {
+            background-color: #f5f5f5;
+            color: #333;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .button.is-light:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-3px);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        /* Notification Styles */
+        .notification {
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .is-success {
+            background-color: #48c774;
+            color: white;
+        }
+
+        .is-danger {
+            background-color: #f14668;
+            color: white;
+        }
+
+        .is-warning {
+            background-color: #ffdd57;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Mobile styles */
+        @media screen and (max-width: 900px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .top-info-bar {
+                height: 70px;
+                flex-direction: column;
+                padding: 5px 0;
+                justify-content: center;
+            }
+
+            .contact-info, .social-media {
+                width: 100%;
+                justify-content: center;
+                gap: 10px;
+                padding: 0 10px;
+                flex-wrap: wrap;
+            }
+
+            .contact-info a, .social-media a {
+                font-size: 0.8rem;
+            }
+
+            .social-media {
+                gap: 10px;
+                margin-top: 5px;
+            }
+
+            nav {
+                top: 70px;
+                height: 70px;
+            }
+
+            .nav-links {
+                position: fixed;
+                right: 0;
+                height: calc(100vh - 140px);
+                top: 140px;
+                background-color: rgb(0, 4, 255);
+                flex-direction: column;
+                align-items: center;
+                width: 70%;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-out;
+                padding-top: 30px;
+            }
+
+            .nav-links.left, .nav-links.right {
+                justify-content: flex-start;
+            }
+
+            .nav-links a {
+                margin: 10px 0;
+                padding: 15px;
+                width: 80%;
+                font-size: 1.1rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                color: white;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .logo-container {
+                position: static;
+                transform: none !important;
+                order: -1;
+            }
+
+            .shield-logo {
+                width: 120px;
+                height: 70px;
+                margin-top: 10px;
+                background: transparent;
+            }
+
+            .logo-img {
+                max-height: 50px;
+            }
+
+            .registration-hero h1 {
+                font-size: 2rem;
+            }
+
+            .registration-hero p {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+
+            .programs-container {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .button.is-primary, .button.is-light {
+                width: 100%;
+            }
+
+            .nav-active {
+                transform: translateX(0%);
+            }
+
+            .toggle .line1 {
+                transform: rotate(-45deg) translate(-6px, 7px);
+            }
+            .toggle .line2 {
+                opacity: 0;
+            }
+            .toggle .line3 {
+                transform: rotate(45deg) translate(-6px, -7px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Info Bar with Contact and Social Media -->
+    <div class="top-info-bar">
+        <div class="contact-info">
+            <a href="#"><i class="fas fa-map-marker-alt"></i> 123 Rue Example, Paris</a>
+            <a href="tel:+33123456789"><i class="fas fa-phone"></i> +33 1 23 45 67 89</a>
+            <a href="mailto:contact@ipiate.com"><i class="fas fa-envelope"></i> contact@ipiate.com</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-links left">
+            <a href="index.html">Accueil</a>
+            <a href="#about">À propos</a>
+        </div>
+        
+        <div class="logo-container">
+            <div class="shield-logo">
+                <img src="ipiate.png" alt="IPIATE Logo" class="logo-img">
+            </div>
+        </div>
+        
+        <div class="nav-links right">
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+        
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <!-- Registration Hero Section -->
+    <section class="registration-hero">
+        <h1><i class="fas fa-user-graduate mr-3"></i>Inscription Étudiant</h1>
+        <p>Rejoignez notre communauté étudiante en remplissant ce formulaire d'inscription</p>
+    </section>
+
+    <!-- Registration Form Container -->
+    <div class="registration-container">
+        <div class="registration-card">
+            <div class="card-header">
+                <h2>Formulaire d'Inscription</h2>
+            </div>
+            <div class="card-body">
+                <!-- Updated Form with EmailJS integration -->
+                <form id="registration-form">
+                    <!-- Personal Information Section -->
+                    <div class="form-section">
+                        <h3>Informations Personnelles</h3>
+                        
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Prénom</label>
+                                    <div class="control has-icons-left">
+                                        <input class="input" type="text" placeholder="Prénom" name="firstName" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Nom</label>
+                                    <div class="control has-icons-left">
+                                        <input class="input" type="text" placeholder="Nom" name="lastName" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Date de Naissance</label>
+                                    <div class="control has-icons-left">
+                                        <input class="input" type="date" name="dob" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Genre</label>
+                                    <div class="control">
+                                        <label class="radio mr-3">
+                                            <input type="radio" name="gender" value="male" required>
+                                            Masculin
+                                        </label>
+                                        <label class="radio mr-3">
+                                            <input type="radio" name="gender" value="female">
+                                            Féminin
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="gender" value="other">
+                                            Autre
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Email</label>
+                                    <div class="control has-icons-left">
+                                        <input class="input" type="email" placeholder="Votre Email" name="email" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Téléphone</label>
+                                    <div class="control has-icons-left">
+                                        <input class="input" type="tel" placeholder="Numéro de téléphone" name="phone" required>
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-phone"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Program Selection Section -->
+                    <div class="form-section">
+                        <h3>Choix de Programme</h3>
+                        <p class="help">Sélectionnez un programme qui vous intéresse</p>
+                        
+                        <div class="programs-container">
+                            <!-- Program 1 -->
+                            <div class="program-option" data-value="computer_science">
+                                <div class="program-image">
+                                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Informatique de Gestion">
+                                </div>
+                                <div class="program-content">
+                                    <div class="program-title">Informatique de Gestion</div>
+                                    <div class="program-description">
+                                        Apprenez la programmation, les algorithmes et le développement logiciel avec nos experts.
+                                    </div>
+                                    <input type="radio" name="program" value="computer_science" class="is-hidden" required>
+                                </div>
+                            </div>
+                            
+                            <!-- Program 2 -->
+                            <div class="program-option" data-value="business">
+                                <div class="program-image">
+                                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Gestion d'Entreprise">
+                                </div>
+                                <div class="program-content">
+                                    <div class="program-title">Gestion d'Entreprise</div>
+                                    <div class="program-description">
+                                        Maîtrisez le management, le marketing et l'entrepreneuriat pour le monde des affaires moderne.
+                                    </div>
+                                    <input type="radio" name="program" value="business" class="is-hidden">
+                                </div>
+                            </div>
+                            
+                            <!-- Program 3 -->
+                            <div class="program-option" data-value="engineering">
+                                <div class="program-image">
+                                    <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ingénierie">
+                                </div>
+                                <div class="program-content">
+                                    <div class="program-title">Ingénierie</div>
+                                    <div class="program-description">
+                                        Spécialisez-vous en génie mécanique, électrique ou civil avec des projets pratiques.
+                                    </div>
+                                    <input type="radio" name="program" value="engineering" class="is-hidden">
+                                </div>
+                            </div>
+                            
+                            <!-- Program 4 -->
+                            <div class="program-option" data-value="health_sciences">
+                                <div class="program-image">
+                                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sciences de la Santé">
+                                </div>
+                                <div class="program-content">
+                                    <div class="program-title">Sciences de la Santé</div>
+                                    <div class="program-description">
+                                        Préparez-vous à des carrières en médecine, soins infirmiers ou santé publique.
+                                    </div>
+                                    <input type="radio" name="program" value="health_sciences" class="is-hidden">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information Section -->
+                    <div class="form-section">
+                        <h3>Informations Complémentaires</h3>
+                        
+                        <div class="field">
+                            <label class="label">Comment avez-vous entendu parler de nous ?</label>
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="referralSource">
+                                        <option value="" selected>Sélectionnez une option</option>
+                                        <option value="friend">Ami/Famille</option>
+                                        <option value="school">Conseiller d'orientation</option>
+                                        <option value="social">Réseaux sociaux</option>
+                                        <option value="search">Moteur de recherche</option>
+                                        <option value="event">Salon étudiant/Événement</option>
+                                        <option value="other">Autre</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="field">
+                            <label class="label">Informations supplémentaires</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Toute information supplémentaire que vous souhaitez partager..." name="additionalInfo"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" name="agreeTerms" required>
+                                J'accepte les <a href="#" target="_blank">conditions générales</a> et reconnaît que les informations fournies sont exactes.
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Buttons -->
+                    <div class="buttons">
+                        <button class="button is-primary" type="submit" onclick="sendMail()"   id="submit-button">
+                            <span class="icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </span>
+                            <span>Soumettre l'inscription</span>
+                        </button>
+                        <button class="button is-light" type="reset" id="reset-button">
+                            <span class="icon">
+                                <i class="fas fa-undo"></i>
+                            </span>
+                            <span>Réinitialiser</span>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success/Error Message -->
+                <div id="message" class="notification is-hidden"></div>
+            </div>
+        </div>
+    </div>
+    <script src="scrip.js"></script>
+
+    <script>
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const burger = document.querySelector('.burger');
+            const navLinksLeft = document.querySelector('.nav-links.left');
+            const navLinksRight = document.querySelector('.nav-links.right');
+
+            burger.addEventListener('click', () => {
+                // Toggle nav
+                navLinksLeft.classList.toggle('nav-active');
+                navLinksRight.classList.toggle('nav-active');
+                
+                // Burger animation
+                burger.classList.toggle('toggle');
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) {
+                        navLinksLeft.classList.remove('nav-active');
+                        navLinksRight.classList.remove('nav-active');
+                        burger.classList.remove('toggle');
+                    }
+                });
+            });
+
+            // Scroll effect
+            const nav = document.querySelector('nav');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+
+            // Form functionality
+            const form = document.getElementById("registration-form");
+            const submitButton = document.getElementById("submit-button");
+            const resetButton = document.getElementById("reset-button");
+            const messageDiv = document.getElementById("message");
+            const programOptions = document.querySelectorAll('.program-option');
+            
+            // Program selection functionality
+            programOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Deselect all other options
+                    programOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                        opt.querySelector('input[type="radio"]').checked = false;
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+            
+            // Reset button functionality
+            resetButton.addEventListener('click', function() {
+                // Reset program selections
+                programOptions.forEach(option => {
+                    option.classList.remove('selected');
+                    option.querySelector('input[type="radio"]').checked = false;
+                });
+                
+                // Hide any messages
+                messageDiv.classList.add('is-hidden');
+            });
+            
+            // Form submission handler
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                // Validate program selection
+                const selectedProgram = document.querySelector('input[name="program"]:checked');
+                if (!selectedProgram) {
+                    showMessage('Veuillez sélectionner un programme', 'danger');
+                    return;
+                }
+                
+                submitButton.classList.add('is-loading');
+                messageDiv.classList.add('is-hidden');
+                
+                // Simulate form submission (since EmailJS is removed)
+                setTimeout(() => {
+                    showMessage('Votre inscription a été envoyée avec succès!', 'success');
+                    form.reset();
+                    
+                    // Reset program selections
+                    programOptions.forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    
+                    submitButton.classList.remove('is-loading');
+                }, 1500);
+            });
+            
+            // Helper function to show messages
+            function showMessage(text, type) {
+                messageDiv.textContent = text;
+                messageDiv.className = `notification is-${type}`;
+                messageDiv.classList.remove('is-hidden');
+                
+                if (type === 'success') {
+                    setTimeout(() => {
+                        messageDiv.classList.add('is-hidden');
+                    }, 5000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
