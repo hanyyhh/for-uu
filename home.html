@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Salma's Dream 💜</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --purple-dark: #1a0b2a;
+  --purple-light: #2b0b3d;
+  --pink: #f3b6e0;
+  --glow: #e5b7ff;
+}
+
+/* GENERAL */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+body { color: #fff; overflow-x:hidden; scroll-behavior:smooth; background: var(--purple-dark); }
+
+/* FADE ANIMATIONS */
+.fade-out { opacity:0; transition: opacity 1s ease; }
+.fade-in { opacity:1; transition: opacity 1s ease; }
+
+/* PRE-ENTRY / PASSWORD PAGE */
+#pre-entry, #message-page { 
+  position:fixed; inset:0; display:flex; justify-content:center; align-items:center; z-index:9999;
+  transition: opacity 1s ease; 
+}
+
+.pre-box, .message-box {
+  background: rgba(70,0,90,0.7);
+  padding:50px 40px;
+  border-radius:30px;
+  text-align:center;
+  box-shadow:0 0 60px rgba(155,106,214,0.7);
+  color:#fff;
+  animation: slideUp 1s ease;
+}
+
+#pre-entry input {
+  padding:10px 15px;
+  border-radius:10px;
+  border:none;
+  margin-top:15px;
+  width:200px;
+}
+
+#pre-entry button, #message-page button {
+  padding:10px 20px;
+  border-radius:10px;
+  border:none;
+  background: var(--pink);
+  color:#1a0b2a;
+  margin-top:10px;
+  cursor:pointer;
+  transition: transform 0.2s;
+}
+#pre-entry button:hover, #message-page button:hover { transform: scale(1.05); }
+
+#pre-entry p, #message-page p { margin-top:10px; color:#d3b3ff; }
+
+/* SECTIONS */
+section { max-width:1000px; margin:auto; padding:110px 20px; text-align:center; position:relative; z-index:1; display:none; }
+h2.section-title { font-size:36px; color: var(--glow); margin-bottom:40px; }
+
+/* HERO */
+#hero .hero-box { background: rgba(70,0,90,0.5); backdrop-filter: blur(12px); padding:50px 40px; border-radius:30px; text-align:center; box-shadow: 0 0 60px rgba(155,106,214,0.7); display:inline-block; animation: fadeIn 1.5s forwards; }
+#hero .hero-box h1 { font-family:'Dancing Script', cursive; font-size:48px; color: var(--glow); text-shadow: 0 0 20px var(--glow); margin-bottom:12px; }
+#hero .hero-box p { color:#d3b3ff; font-size:18px; margin-top:15px; text-shadow: 0 0 10px #d3b3ff; }
+
+/* COUNTDOWN */
+#countdown { display:flex; justify-content:center; gap:15px; margin-top:25px; flex-wrap:wrap; }
+.time { background: rgba(255,255,255,0.15); padding:15px 20px; border-radius:15px; min-width:80px; text-align:center; box-shadow:0 0 25px rgba(243,182,224,0.3); }
+.time h2 { color: var(--glow); font-size:24px; }
+.time span { font-size:12px; color:#d3b3ff; }
+
+/* ABOUT */
+#about p { 
+  font-family:'Dancing Script', cursive; 
+  font-size:28px; 
+  line-height:2.2; 
+  color:#d3b3ff; 
+  margin-bottom:22px; 
+  opacity:0; 
+  transform: translateY(20px); 
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* FLOATING HEARTS & SPARKLES */
+.heart, .sparkle { position:fixed; bottom:-30px; font-size:20px; color:var(--pink); animation: floatUp 7s linear infinite; opacity:0.7; }
+.sparkle { color:#fff; font-size:14px; opacity:0.5; }
+
+/* PARTICLE CANVAS */
+#particles { position:fixed; inset:0; z-index:0; }
+
+/* ANIMATIONS */
+@keyframes floatUp { 0%{transform:translateY(0);opacity:0;} 10%{opacity:0.7;} 100%{transform:translateY(-120vh);opacity:0;} }
+@keyframes fadeIn { to { opacity:1; transform: translateY(0);} }
+@keyframes slideUp { from {opacity:0; transform:translateY(50px);} to {opacity:1; transform:translateY(0);} }
+
+/* FOOTER */
+footer { text-align:center; padding:50px 20px; color:#b09be0; font-size:16px; position:relative; z-index:1; }
+</style>
+</head>
+
+<body>
+
+<!-- PRE-ENTRY / PASSWORD PAGE -->
+<div id="pre-entry">
+  <div class="pre-box">
+    <h1>💜 Welcome 💜</h1>
+    <p>Enter the secret password to see the page:</p>
+    <input type="password" id="password-input" placeholder="Type here..." />
+    <button id="enter-btn">Enter</button>
+    <p id="error-msg" style="color:#ff9999; display:none; margin-top:10px;">Incorrect password</p>
+    <p style="margin-top:20px; font-size:12px;">💌 A little note: Remember, every day is special ✨</p>
+  </div>
+</div>
+
+<!-- MESSAGE PAGE -->
+<div id="message-page" style="display:none;">
+  <div class="message-box">
+    <h1>💜 Hello Little Bunny 💜</h1>
+    <p>mhm kigolk frass l3am kola wahd ki3ty gift lnass li ystahlo o3zaz 3leh wlkn nty b3eda db so drt ghe had chwyaa ntmna y3jbek 3arfk ka3ya kntmna ytl3 lk moral bsbabi , ejooooy💜
+
+    </p>
+    <button id="go-main-btn">Enter Main Page</button>
+  </div>
+</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bg-music" src="Photograph (Instrumental) - Ed Sheeran.mp3" loop ></audio>
+
+<!-- PARTICLES BACKGROUND -->
+<canvas id="particles"></canvas>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-box">
+    <h1>💜 A Day Worth Waiting For 💜</h1>
+    <p>Counting every moment until September 11, 2026 ✨</p>
+    <div id="countdown">
+      <div class="time"><h2 id="days">0</h2><span>Days</span></div>
+      <div class="time"><h2 id="hours">0</h2><span>Hours</span></div>
+      <div class="time"><h2 id="minutes">0</h2><span>Minutes</span></div>
+      <div class="time"><h2 id="seconds">0</h2><span>Seconds</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2 class="section-title">About Salma</h2>
+
+  <p>
+    Salma is a rare kind of soul — the kind that brings warmth without
+    trying, and light without asking for attention. Her presence feels
+    calm and reassuring, like a soft melody that stays with you long
+    after the moment has passed.
+  </p>
+
+  <p>
+    Her kindness is quiet yet powerful. It lives in the smallest details:
+    the way she listens, the way she understands, the way she cares
+    deeply without ever needing to show it loudly. There is sincerity
+    in her heart, and honesty in everything she does.
+  </p>
+
+  <p>
+    Her beauty is not only something seen, but something felt. It is
+    natural, gentle, and timeless — like poetry written without words.
+    Every smile carries softness, every glance holds grace, and every
+    moment she exists in feels a little more peaceful.
+  </p>
+
+  <p>
+    Even in silence, Salma shines. In her calmness there is strength,
+    and in her gentleness there is depth. She has a way of making the
+    world feel lighter, simply by being herself.
+  </p>
+
+  <p>
+    This space is a tribute to that light — to her elegance, her warmth,
+    and the quiet magic she brings into the lives around her. It exists
+    to remind her that she is valued, admired, and appreciated more
+    than words can ever fully express.
+  </p>
+
+  <p>
+    Salma, whenever the world feels heavy or overwhelming, remember
+    this: your presence matters. You are seen, you are cherished, and
+    you are more than enough — exactly as you are, always.
+  </p>
+  <p>happy new year little bunny</p>
+</section>
+
+<footer>💜 Made with care & gentle thoughts</footer>
+
+<script>
+// PASSWORD LOGIC
+const correctPassword = "ow";
+const preEntry = document.getElementById('pre-entry');
+const input = document.getElementById('password-input');
+const btn = document.getElementById('enter-btn');
+const errorMsg = document.getElementById('error-msg');
+const messagePage = document.getElementById('message-page');
+const goMainBtn = document.getElementById('go-main-btn');
+const mainSections = document.querySelectorAll('section');
+
+btn.addEventListener('click', () => {
+  if(input.value === correctPassword){
+    preEntry.classList.add('fade-out');
+    setTimeout(() => {
+      preEntry.style.display = 'none';
+      messagePage.style.display = 'flex';
+      messagePage.classList.add('fade-in');
+    }, 1000);
+  } else {
+    errorMsg.style.display = 'block';
+    input.value = '';
+  }
+});
+
+input.addEventListener('keypress', (e) => {
+  if(e.key === 'Enter') btn.click();
+});
+
+goMainBtn.addEventListener('click', () => {
+  messagePage.classList.add('fade-out');
+  setTimeout(() => {
+    messagePage.style.display = 'none';
+    mainSections.forEach(sec => {
+      sec.style.display = 'block';
+      sec.classList.add('fade-in');
+    });
+  }, 1000);
+});
+
+// COUNTDOWN
+const birthday = new Date("September 11, 2026 00:00:00").getTime();
+setInterval(() => {
+  const now = new Date().getTime();
+  const d = birthday - now;
+  if(d>0){
+    days.innerText = Math.floor(d/(1000*60*60*24));
+    hours.innerText = Math.floor((d/(1000*60*60))%24);
+    minutes.innerText = Math.floor((d/(1000*60))%60);
+    seconds.innerText = Math.floor((d/1000)%60);
+  }
+},1000);
+
+// FLOATING HEARTS & SPARKLES
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = Math.random() > 0.3 ? "heart" : "sparkle";
+  h.innerHTML = Math.random() > 0.3 ? "💜" : "✨";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = (Math.random()*16+12)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},700);
+
+// STARS PARTICLES
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for(let i=0;i<250;i++){
+  stars.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*1.5+0.5,
+    dx: (Math.random()-0.5)*0.05,
+    dy: (Math.random()-0.5)*0.05,
+    alpha: Math.random()*0.8+0.2,
+    blink: Math.random()*0.05+0.01
+  });
+}
+
+function animateStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    s.alpha += s.blink;
+    if(s.alpha>1 || s.alpha<0.2) s.blink*=-1;
+    s.x += s.dx;
+    s.y += s.dy;
+    if(s.x>canvas.width)s.x=0;
+    if(s.x<0)s.x=canvas.width;
+    if(s.y>canvas.height)s.y=0;
+    if(s.y<0)s.y=canvas.height;
+    ctx.beginPath();   
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = "rgba(255,255,255,"+s.alpha+")";
+    ctx.fill();
+  });
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+window.addEventListener('resize',()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+
+// ABOUT FADE-IN ONE BY ONE
+const aboutParagraphs = document.querySelectorAll('#about p');
+aboutParagraphs.forEach((p, i) => {
+  setTimeout(() => {
+    p.style.opacity = '1';
+    p.style.transform = 'translateY(0)';
+  }, i * 1500);
+});
+
+// AUTO PLAY BACKGROUND MUSIC
+const bgMusic = document.getElementById('bg-music');
+bgMusic.play().then(() => {
+  setTimeout(() => { bgMusic.muted = false; }, 500);
+}).catch(() => {
+  document.addEventListener('click', () => { bgMusic.play().catch(()=>{}); }, { once: true });
+});
+</script>
+
+</body>
+</html>
